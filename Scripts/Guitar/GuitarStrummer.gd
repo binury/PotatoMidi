@@ -26,7 +26,8 @@ func _setup_strings():
 	for pitch in base_pitches:
 		strings.append(GuitarString.new(pitch))
 
-func _input(event: InputEvent):
+func input(input_event: Dictionary):
+	var event = input_event.event
 	if not _is_valid_midi_note_on(event):
 		return
 
@@ -34,6 +35,9 @@ func _input(event: InputEvent):
 	var note = _find_best_note(pitch)
 	if note != null:
 		play_note(note)
+		return
+		
+	return
 
 func _is_valid_midi_note_on(event: InputEvent) -> bool:
 	if not (event is InputEventMIDI):
