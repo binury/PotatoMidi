@@ -1,8 +1,8 @@
 extends Node
 class_name GuitarStrummer
 
-const HAMMER_ON_WINDOW = 500  # milliseconds
-const MIN_VELOCITY_THRESHOLD = 0  # minimum velocity to trigger note
+const HAMMER_ON_WINDOW = 500 # milliseconds
+const MIN_VELOCITY_THRESHOLD = 0 # minimum velocity to trigger note
 
 var strings: Array = []
 var string_queue: MidiStringQueue
@@ -12,11 +12,9 @@ const GuitarString = preload("res://mods/PotatoMidi/Scripts/Guitar/GuitarString.
 const MidiStringQueue = preload("res://mods/PotatoMidi/Scripts/Guitar/StringQueue.gd")
 
 
-
 func _init():
 	_setup_strings()
 	string_queue = MidiStringQueue.new()
-
 
 
 func _setup_strings():
@@ -31,10 +29,17 @@ func input(input_event: Dictionary):
 	if not _is_valid_midi_note_on(event):
 		return
 
+	var parameters = input_event.get("parameters", {})
+
+	var volume = 1.0
+	if parameters.get("apply_velocity", true):
+		volume = -(1 - (event.velocity / 128.0)) * 15
+		
 	var pitch = event.pitch
 	var note = _find_best_note(pitch)
 	if note != null:
-		play_note(note)
+
+		play_note(note, volume)
 		return
 		
 	return
@@ -73,7 +78,7 @@ func select_best_note(notes: Array) -> GuitarNote:
 	
 	return best_note
 
-func play_note(note: GuitarNote):
+func play_note(note: GuitarNote, velocity: float):
 	var string = strings[note.string]
 	var current_time = OS.get_system_time_msecs()
 	var time_since_last_strum = current_time - string.last_strum_time
@@ -92,5 +97,5 @@ func should_hammer_on(time_delta: int, new_fret: int, last_fret: int) -> bool:
 func emit_hammer_on(note: GuitarNote):
 	PlayerData.emit_signal("_hammer_guitar", note.string, note.fret)
 
-func emit_regular_strum(note: GuitarNote):
-	PlayerData.emit_signal("_play_guitar", note.string, note.fret, 1.0)
+func emit_regular_strum(note: GuitarNote, velocity: float):
+	PlayerData.emit_signal("_play_guitar", note.string, note.fret, velocity)
