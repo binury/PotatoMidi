@@ -3,7 +3,8 @@ class_name SFXEffect
 
 # Audio settings
 
-const BARK_COOLDOWN = 5     # ms between barks
+const DEFAULT_MIDI_ORIGINAL_NOTE = 45 # C3
+const BARK_COOLDOWN = 5 # ms between barks
 
 
 # Exported properties
@@ -24,13 +25,16 @@ func trigger_sfx(input_event: Dictionary):
 
 	var effect = parameters.effect
 	
-	if effect == "bark_cat" or effect == "bark_dog":
-		player._sync_face_emote("bark")
+	var face_emote = effect.get("face_emote", null)
 
+	if face_emote:
+		player._sync_face_emote(face_emote)
 
 	var apply_pitch = parameters.get("apply_pitch", true)
+	var base_pitch = parameters.get("base_pitch", DEFAULT_MIDI_ORIGINAL_NOTE)
+
 	if apply_pitch:
-		var pitch = _calculate_sfx_pitch(midi_pitch, 80)
+		var pitch = _calculate_sfx_pitch(midi_pitch, base_pitch)
 		player._sync_sfx(effect, null, pitch)
 	else:
 		player._sync_sfx(effect, null, 1)

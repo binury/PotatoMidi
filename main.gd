@@ -38,7 +38,6 @@ func _setup_midi():
 		push_error("Midi: Failed to open MIDI inputs")
 
 
-
 func _input(event):
 	var player = _player_api.local_player
 	if not event is InputEventMIDI: return
@@ -97,12 +96,11 @@ func _create_pitch_array(instrument: Dictionary):
 		return null
 	
 
-func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Array, instrument: Dictionary, parameters: Dictionary = {}):
-	
+func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Array, instrument: Dictionary):
 	var pitches = _create_pitch_array(instrument)
 
 	for channel in channels:
-		var channel_id 
+		var channel_id
 		if channel_lookup.has(channel):
 			channel_id = channel_lookup[channel]
 		else:
@@ -113,7 +111,7 @@ func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Ar
 				"callback": callback,
 				"channel": channel_id,
 				"pitch": pitch,
-				"parameters": parameters
+				"parameters": instrument.get("parameters", {})
 			})
 
 func _validate_instrument(instrument: Dictionary):
@@ -128,37 +126,12 @@ func _validate_instrument(instrument: Dictionary):
 		return false
 	return true
 
-func _validate_sfx_mapping(sfx_mapping: Dictionary):
-	if not sfx_mapping.has("channels"):
-		print("PotatoMidi: SFX mapping has no channels: ", sfx_mapping)
-		return false
-	if not sfx_mapping.has("effect"):
-		print("PotatoMidi: SFX mapping has no effect: ", sfx_mapping)
-		return false
-	if _create_pitch_array(sfx_mapping) == null:
-		print("PotatoMidi: SFX mapping has no pitch information: ", sfx_mapping)
-		return false
-	return true
-
-func _validate_talk_effect_mapping(talk_effect_mapping: Dictionary):
-	if not talk_effect_mapping.has("channels"):
-		print("PotatoMidi: Talk effect mapping has no channels: ", talk_effect_mapping)
-		return false
-	if not talk_effect_mapping.has("letter"):
-		print("PotatoMidi: Talk effect mapping has no letter: ", talk_effect_mapping)
-		return false
-	if not talk_effect_mapping.has("apply_pitch"):
-		print("PotatoMidi: Talk effect mapping has no apply_pitch: ", talk_effect_mapping)
-		return false
-	if _create_pitch_array(talk_effect_mapping) == null:
-		print("PotatoMidi: Talk effect mapping has no pitch information: ", talk_effect_mapping)
-		return false
-	return true
 
 func _load_user_config():
 	var instruments_lookup = {
 		"guitar_strummer": funcref(_guitar_strummer, "input"),
-		"talk_effect": funcref(_talk_effect, "trigger_talk")
+		"talk_effect": funcref(_talk_effect, "trigger_talk"),
+		"sfx": funcref(_sfx_effect, "trigger_sfx")
 	}
 
 	var config = _load_config()
@@ -166,6 +139,7 @@ func _load_user_config():
 	if not config:
 		return
 	instruments = []
+	
 	var channel_mappings_config = config["channel_mappings"]
 
 	var instruments_config = config.get("instruments", [])
@@ -186,30 +160,6 @@ func _load_user_config():
 			_add_instrument(instrument_callback, channel_mappings_config, channels, instrument)
 		else:
 			print("PotatoMidi: Unknown instrument: ", instrument_name)
-
-	for instrument in sfx_mappings_config:
-		if not _validate_sfx_mapping(instrument):
-			continue
-		var channels = instrument["channels"]
-		var effect = instrument["effect"]
-		var apply_pitch = instrument["apply_pitch"]
-		
-		_add_instrument(funcref(_sfx_effect, "trigger_sfx"), channel_mappings_config, channels, instrument, {
-			effect = effect,
-			apply_pitch = apply_pitch
-		})
-
-	for talk_effect in talk_effect_letter_mappings_config:
-		if not _validate_talk_effect_mapping(talk_effect):
-			continue
-		var channels = talk_effect["channels"]
-		var letter = talk_effect["letter"]
-		var apply_pitch = talk_effect["apply_pitch"]
-
-		_add_instrument(funcref(_talk_effect, "trigger_talk"), channel_mappings_config, channels, talk_effect, {
-			letter = letter,
-			apply_pitch = apply_pitch
-		})
 	
 
 func _ready():
@@ -232,10 +182,6 @@ func _find_best_instrument(event: InputEventMIDI):
 			best_instruments.append(instrument)
 	if best_instruments.size() > 0:
 		return best_instruments
-
-
-
-
 
 
 func _handle_note_on(event):

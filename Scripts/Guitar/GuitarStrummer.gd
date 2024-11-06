@@ -77,7 +77,7 @@ func play_note(note: GuitarNote):
 	var string = strings[note.string]
 	var current_time = OS.get_system_time_msecs()
 	var time_since_last_strum = current_time - string.last_strum_time
-	
+
 	if should_hammer_on(time_since_last_strum, note.fret, string.last_fret):
 		emit_hammer_on(note)
 	else:
