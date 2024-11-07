@@ -1,8 +1,11 @@
 # 🎸 Potato MIDI Mod for Webfishing 🎤
 
-This mod for the game **WebFishing** lets you play guitar and sing directly in the game using a MIDI input device.
+This mod takes MIDI input and allows you to configure it to various in-game sounds.
 
-  
+It's for power users who want to play around with a configuration file to play more than just guitar.
+
+If you are not a power user, you should use [MidiStrummer](https://github.com/puppy-girl/MidiStrummer) instead.
+
 ## Requirements
 - [GDWeave Mod Loader](https://github.com/NotNite/GDWeave)  
   Make sure to install GDWeave to load this mod in WebFishing.
@@ -21,6 +24,12 @@ This mod for the game **WebFishing** lets you play guitar and sing directly in t
 - Launch WebFishing with GDWeave.
 - Open the MIDI settings within the mod (if available) to configure your preferred instrument and vocal settings.
 
+
+## FAQ
+
+### Will this be released on Thunderstore?
+
+No, This mod will never be released on Thunderstore, As it's too advanced for the average user.
 
 ## Troubleshooting
 - Ensure GDWeave and BlueberryWolfi's APIs are installed and up-to-date.
