@@ -172,7 +172,7 @@ The configuration file has the following structure:
         ```
     - `sfx_sound`
         - **Type**: `String`
-        - **Description**: The name of the SFX sound to play.
+        - **Description**: The name of the SFX sound to play. See [Valid SFX Sounds](https://github.com/ThePotato97/FishingPotatoMidi/blob/master/SFX%20Sounds.md) for a list of valid SFX sounds.
         - **Default**: `bark_cat`
         - **Example**: 
         ```json
