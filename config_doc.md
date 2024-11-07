@@ -1,7 +1,7 @@
 # PotatoMidi Configuration
 
-Any changes made to the configuration file will take effect immediately.
-Any issues with the configuration file will be logged to the console.
+Any changes made to the configuration file will take effect immediately. <br>
+Any issues with the configuration file will be logged to the console/log file.
 
 Logs are written to:
 
