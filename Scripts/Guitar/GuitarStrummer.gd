@@ -33,12 +33,12 @@ func input(input_event: Dictionary):
 
 	var volume = 1.0
 	if parameters.get("apply_velocity", true):
-		volume = -(1 - (event.velocity / 128.0)) * 15
-		
+		var reciprocal = 1 / 0.32 # this is to cancel out the 0.32 thing in guitar_string_sound.db
+		volume = (float(event.velocity) / 127.0) * reciprocal
+
 	var pitch = event.pitch
 	var note = _find_best_note(pitch)
 	if note != null:
-
 		play_note(note, volume)
 		return
 		
@@ -78,7 +78,7 @@ func select_best_note(notes: Array) -> GuitarNote:
 	
 	return best_note
 
-func play_note(note: GuitarNote, velocity: float):
+func play_note(note: GuitarNote, volume: float):
 	var string = strings[note.string]
 	var current_time = OS.get_system_time_msecs()
 	var time_since_last_strum = current_time - string.last_strum_time
@@ -86,7 +86,7 @@ func play_note(note: GuitarNote, velocity: float):
 	if should_hammer_on(time_since_last_strum, note.fret, string.last_fret):
 		emit_hammer_on(note)
 	else:
-		emit_regular_strum(note)
+		emit_regular_strum(note, volume)
 		string.update_strum(note.fret, current_time)
 	
 	string_queue.update(note.string)
@@ -97,5 +97,5 @@ func should_hammer_on(time_delta: int, new_fret: int, last_fret: int) -> bool:
 func emit_hammer_on(note: GuitarNote):
 	PlayerData.emit_signal("_hammer_guitar", note.string, note.fret)
 
-func emit_regular_strum(note: GuitarNote, velocity: float):
-	PlayerData.emit_signal("_play_guitar", note.string, note.fret, velocity)
+func emit_regular_strum(note: GuitarNote, volume: float):
+	PlayerData.emit_signal("_play_guitar", note.string, note.fret, volume)

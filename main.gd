@@ -115,8 +115,8 @@ func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Ar
 			})
 
 func _validate_instrument(instrument: Dictionary):
-	if not instrument.has("name"):
-		print("PotatoMidi: Instrument has no name: ", instrument)
+	if not instrument.has("instrument"):
+		print("PotatoMidi: Instrument has no instrument set: ", instrument)
 		return false
 	if not instrument.has("channels"):
 		print("PotatoMidi: Instrument has no channels: ", instrument)
@@ -152,7 +152,7 @@ func _load_user_config():
 		if not _validate_instrument(instrument):
 			continue
 		var channels = instrument["channels"]
-		var instrument_name = instrument["name"]
+		var instrument_name = instrument["instrument"]
 
 		var instrument_callback = instruments_lookup[instrument_name]
 

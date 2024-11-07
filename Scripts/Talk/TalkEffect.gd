@@ -11,7 +11,7 @@ const DEFAULT_LETTER = "a"
 func _play_talk_effect(player, pitch, letter):
 	
 	# Send network event
-	Network._send_actor_action(player.actor_id, "_talk", [letter.to_lower(), pitch], false)
+	Network._send_actor_action(player.actor_id, "_talk", [letter.to_lower(), pitch], false, Network.CHANNELS.SPEECH)
 	
 	# Play local effect
 	player._talk(letter.to_lower(), pitch)

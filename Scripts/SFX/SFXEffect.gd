@@ -23,9 +23,9 @@ func trigger_sfx(input_event: Dictionary):
 	if current_time - _last_bark_time < BARK_COOLDOWN:
 		return
 
-	var effect = parameters.effect
+	var effect = parameters.get("sfx_sound")
 	
-	var face_emote = effect.get("face_emote", null)
+	var face_emote = parameters.get("face_emote", null)
 
 	if face_emote:
 		player._sync_face_emote(face_emote)
