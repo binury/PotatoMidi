@@ -3,6 +3,8 @@
 Any changes made to the configuration file will take effect immediately. <br>
 Any issues with the configuration file will be logged to the console/log file.
 
+** If you want to reset the configuration file, delete the file and it'll be regenerated. **
+
 Logs are written to:
 
 `%AppData%\Godot\app_userdata\webfishing_2_newver\logs\godot.log`
