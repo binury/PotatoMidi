@@ -112,6 +112,7 @@ The configuration file has the following structure:
 - **Description**: A dictionary of parameters specific to the instrument.
 
 1. **guitar_strummer**
+    **Guitar can only do 40-80 pitch**
     - `apply_velocity`
         - **Type**: `bool`
         - **Description**: Whether to apply velocity to the strum.
@@ -120,7 +121,7 @@ The configuration file has the following structure:
         ```json
         "apply_velocity": true
         ```
-2. **talk_effect**
+3. **talk_effect**
     - `apply_pitch`
         - **Type**: `bool`
         - **Description**: Whether to apply pitch to the talk effect.
@@ -145,7 +146,7 @@ The configuration file has the following structure:
         ```json
         "letter": "a"
         ```
-3. **SFX**
+4. **SFX**
     - `apply_pitch`
         - **Type**: `bool`
         - **Description**: Whether to apply pitch to the SFX.
