@@ -61,7 +61,7 @@ func _load_config():
 		var user_config_content = config_file.get_as_text()
 		if user_config_content == _last_config:
 			return null
-		print("PotatoMidi: Config file modified, reloading...")
+		Chat.notify("PotatoMidi: Config file modified, reloading...")
 		_last_config = user_config_content
 		config_file.close()
 
@@ -70,8 +70,8 @@ func _load_config():
 
 			return parsed_json.result
 		else:
-			print("PotatoMidi: Failed to parse user config.json")
-			print(parsed_json.error_string)
+			Chat.notify("PotatoMidi: Failed to parse user config.json")
+			Chat.notify(parsed_json.error_string)
 	else:
 		var default_config = _default_config.get_config()
 		config_file.open("user://PotatoMidi.json", File.WRITE)
