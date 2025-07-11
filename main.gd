@@ -4,6 +4,9 @@ extends Node
 const MIDI_MIN_VELOCITY = 0.1
 const MIDI_MAX_VELOCITY = 1.0
 
+onready var Players = get_node("/root/ToesSocks/Players")
+onready var Chat = get_node("/root/ToesSocks/Chat")
+
 # Exported properties
 export(bool) var enable_bark_effects = true
 
@@ -11,7 +14,7 @@ export(bool) var enable_bark_effects = true
 var _state = {
 	"is_initialized": false
 }
-var _player_api
+
 
 class Instrument:
 	var callback: FuncRef
@@ -26,10 +29,7 @@ onready var _guitar_strummer = preload("res://mods/PotatoMidi/Scripts/Guitar/Gui
 onready var _sfx_effect = preload("res://mods/PotatoMidi/Scripts/SFX/SFXEffect.gd").new()
 onready var _talk_effect = preload("res://mods/PotatoMidi/Scripts/Talk/TalkEffect.gd").new()
 onready var _default_config = preload("res://mods/PotatoMidi/default_config.gd").new()
-	
-func _setup_player_api():
-	_player_api = get_node_or_null("/root/BlueberryWolfiAPIs/PlayerAPI")
-	
+
 func _setup_midi():
 	if OS.open_midi_inputs():
 		print("Midi: Successfully opened MIDI inputs")
@@ -39,9 +39,9 @@ func _setup_midi():
 
 
 func _input(event):
-	var player = _player_api.local_player
+	var player = Players.local_player
 	if not event is InputEventMIDI: return
-	
+
 	if event.message == MIDI_MESSAGE_NOTE_ON and event.velocity > 0:
 		_handle_note_on(event)
 
@@ -64,7 +64,7 @@ func _load_config():
 		print("PotatoMidi: Config file modified, reloading...")
 		_last_config = user_config_content
 		config_file.close()
-		
+
 		var parsed_json: JSONParseResult = JSON.parse(user_config_content)
 		if parsed_json.error == OK:
 
@@ -94,7 +94,7 @@ func _create_pitch_array(instrument: Dictionary):
 	else:
 		print("PotatoMidi: Instrument has no pitch information: ", instrument)
 		return null
-	
+
 
 func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Array, instrument: Dictionary):
 	var pitches = _create_pitch_array(instrument)
@@ -139,7 +139,7 @@ func _load_user_config():
 	if not config:
 		return
 	instruments = []
-	
+
 	var channel_mappings_config = config["channel_mappings"]
 
 	var instruments_config = config.get("instruments", [])
@@ -160,11 +160,10 @@ func _load_user_config():
 			_add_instrument(instrument_callback, channel_mappings_config, channels, instrument)
 		else:
 			print("PotatoMidi: Unknown instrument: ", instrument_name)
-	
+
 
 func _ready():
 	print("PotatoMidi: Initializing MIDI system...")
-	_setup_player_api()
 	var timer = Timer.new()
 	timer.wait_time = 2.0
 	timer.autostart = true
@@ -185,7 +184,7 @@ func _find_best_instrument(event: InputEventMIDI):
 
 
 func _handle_note_on(event):
-	var player = _player_api.local_player
+	var player = Players.local_player
 	if not is_instance_valid(player):
 		return
 
@@ -203,11 +202,11 @@ func _handle_note_on(event):
 
 	# if _is_drums_compatible_channel(event.channel):
 	# 	_handle_drum_event(player, event)
-	
+
 	# if _is_guitar_compatible_channel(event.channel):
 	# 	var guitar_played = _guitar_strummer.input(event)
 	# 	if enable_bark_effects and _sfx_effect and not guitar_played:
 	# 		_sfx_effect.trigger_bark(player, event.pitch)
-			
+
 	# if _is_vocals_compatible_channel(event.channel):
 	# 	_sfx_effect.trigger_bark(player, event.pitch)
