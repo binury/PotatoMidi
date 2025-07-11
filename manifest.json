@@ -1,0 +1,13 @@
+{
+    "Id": "PotatoMidi",
+    "PackPath": "PotatoMidi.pck",
+    "Dependencies": [
+        "Toes.Socks"
+    ],
+    "Metadata": {
+        "Name": "PotatoMidi",
+        "Author": "Toes",
+        "Version": "0.0.4",
+        "Description": "In game MIDI playback for power users who want to play around with a configuration file to play more than just guitar"
+    }
+}
