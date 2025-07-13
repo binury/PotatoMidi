@@ -29,13 +29,14 @@ onready var _guitar_strummer = preload("res://mods/PotatoMidi/Scripts/Guitar/Gui
 onready var _sfx_effect = preload("res://mods/PotatoMidi/Scripts/SFX/SFXEffect.gd").new()
 onready var _talk_effect = preload("res://mods/PotatoMidi/Scripts/Talk/TalkEffect.gd").new()
 onready var _default_config = preload("res://mods/PotatoMidi/default_config.gd").new()
+onready var JSONMinifier = preload("res://mods/PotatoMidi/Lib/json_minifier.gd").new()
 
 func _setup_midi():
 	if OS.open_midi_inputs():
 		print("Midi: Successfully opened MIDI inputs")
 		_state.is_initialized = true
 	else:
-		push_error("Midi: Failed to open MIDI inputs")
+		Chat.notify("Midi: Failed to open MIDI inputs")
 
 
 func _input(event):
@@ -61,11 +62,12 @@ func _load_config():
 		var user_config_content = config_file.get_as_text()
 		if user_config_content == _last_config:
 			return null
+
 		Chat.notify("PotatoMidi: Config file modified, reloading...")
 		_last_config = user_config_content
 		config_file.close()
 
-		var parsed_json: JSONParseResult = JSON.parse(user_config_content)
+		var parsed_json: JSONParseResult = JSON.parse(JSONMinifier.minify_json(user_config_content))
 		if parsed_json.error == OK:
 
 			return parsed_json.result
