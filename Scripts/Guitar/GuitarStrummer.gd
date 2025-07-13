@@ -41,7 +41,7 @@ func input(input_event: Dictionary):
 	if note != null:
 		play_note(note, volume)
 		return
-		
+
 	return
 
 func _is_valid_midi_note_on(event: InputEvent) -> bool:
@@ -54,28 +54,28 @@ func _find_best_note(pitch: int) -> GuitarNote:
 	if possible_notes.size() == 0:
 		return null
 	return select_best_note(possible_notes)
-	
+
 func _find_possible_notes(pitch: int) -> Array:
 	var notes = []
-	
+
 	for string_idx in strings.size():
 		var string = strings[string_idx]
 		if string.can_play_pitch(pitch):
 			var fret = string.get_fret_for_pitch(pitch)
 			notes.append(GuitarNote.new(string_idx, fret))
-	
+
 	return notes
 
 func select_best_note(notes: Array) -> GuitarNote:
 	var best_note: GuitarNote = notes[0]
 	var lowest_priority = string_queue.get_string_priority(notes[0].string)
-	
+
 	for note in notes:
 		var priority = string_queue.get_string_priority(note.string)
 		if priority < lowest_priority:
 			best_note = note
 			lowest_priority = priority
-	
+
 	return best_note
 
 func play_note(note: GuitarNote, volume: float):
@@ -88,7 +88,7 @@ func play_note(note: GuitarNote, volume: float):
 	else:
 		emit_regular_strum(note, volume)
 		string.update_strum(note.fret, current_time)
-	
+
 	string_queue.update(note.string)
 
 func should_hammer_on(time_delta: int, new_fret: int, last_fret: int) -> bool:

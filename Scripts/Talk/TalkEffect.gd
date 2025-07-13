@@ -9,10 +9,10 @@ const DEFAULT_LETTER = "a"
 
 
 func _play_talk_effect(player, pitch, letter):
-	
+
 	# Send network event
 	Network._send_actor_action(player.actor_id, "_talk", [letter.to_lower(), pitch], false, Network.CHANNELS.SPEECH)
-	
+
 	# Play local effect
 	player._talk(letter.to_lower(), pitch)
 
@@ -31,13 +31,13 @@ func trigger_talk(input_event: Dictionary):
 	var current_time = Time.get_ticks_msec()
 	if current_time - _last_talk_time < TALK_COOLDOWN:
 		return
-	
+
 	var parameters = input_event.parameters
 
 	var letter = parameters.get("letter", "a")
 
 	var apply_pitch = parameters.get("apply_pitch", true)
-	
+
 	var base_pitch = parameters.get("base_pitch", DEFAULT_MIDI_ORIGINAL_NOTE)
 
 	if apply_pitch:

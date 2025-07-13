@@ -24,7 +24,7 @@ func trigger_sfx(input_event: Dictionary):
 		return
 
 	var effect = parameters.get("sfx_sound")
-	
+
 	var face_emote = parameters.get("face_emote", null)
 
 	if face_emote:
