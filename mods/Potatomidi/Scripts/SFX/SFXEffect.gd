@@ -3,9 +3,8 @@ class_name SFXEffect
 
 # Audio settings
 
-const DEFAULT_MIDI_ORIGINAL_NOTE = 45 # C3
-const BARK_COOLDOWN = 5 # ms between barks
-
+const DEFAULT_MIDI_ORIGINAL_NOTE = 45  # C3
+const BARK_COOLDOWN = 5  # ms between barks
 
 # Exported properties
 export(float) var bark_pitch_multiplier = 1.0
@@ -40,6 +39,7 @@ func trigger_sfx(input_event: Dictionary):
 		player._sync_sfx(effect, null, 1)
 
 	_last_bark_time = current_time
+
 
 func _calculate_sfx_pitch(midi_pitch, original_note):
 	var semitone_difference = midi_pitch - original_note

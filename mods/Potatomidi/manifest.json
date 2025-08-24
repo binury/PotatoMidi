@@ -1,0 +1,14 @@
+{
+    "Id": "PotatoMidi",
+    "PackPath": "PotatoMidi.pck",
+    "Dependencies": [
+        "Toes.Socks"
+    ],
+    "Metadata": {
+        "Name": "PotatoMidi",
+        "Author": "ThePotato97, Toes",
+        "Version": "1.0.0",
+        "Description": "Configurable MIDI playback however you see fit... Like singing, playing drums with a boxing glove",
+        "Homepage": "https://github.com/binury/PotatoMidi"
+    }
+}
