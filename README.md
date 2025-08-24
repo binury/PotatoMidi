@@ -158,7 +158,7 @@ The configuration file has the following structure:
    - `base_pitch`
      - **Type**: `int`
      - **Description**: The base pitch for the talk effect. (The talk effect has been clamped between 0.5-2.0)
-     - **Default**: `53`
+     - **Default**: The lowest note in your instrument's pitch range
      - **Example**:
      ```json
      "base_pitch": 53
@@ -166,7 +166,7 @@ The configuration file has the following structure:
    - `letter`
      - **Type**: `String`
      - **Description**: The letter to use for the talk effect.
-     - **Default**: `a`
+     - **Default**: Randomly chosen (each note) between `a`, `o`, or `e`
      - **Example**:
      ```json
      "letter": "a"

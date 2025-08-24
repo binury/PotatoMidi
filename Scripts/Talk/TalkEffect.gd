@@ -34,7 +34,14 @@ func trigger_talk(input_event: Dictionary):
 
 	var parameters = input_event.parameters
 
-	var letter = parameters.get("letter", "a")
+	var letter: String
+	var letter_or_letters = parameters.get("letter", "random")
+	if typeof(letter_or_letters) == TYPE_ARRAY:
+		letter = letter_or_letters[randi() % letter_or_letters.size()]
+	elif letter_or_letters == "random":
+		letter = ["a", "e", "o"][randi() % 3]
+
+	letter = letter.to_lower()
 
 	var apply_pitch = parameters.get("apply_pitch", true)
 
