@@ -10,6 +10,18 @@ It's for power users who want to experimenting and enjoy playing around with a [
 > --**[or learning how to edit](https://www.youtube.com/results?search_query=how%20to%20edit%20a%20json%20file)**--
 > a `.json` config file, you should use something like [MidiStrummer](https://github.com/puppy-girl/MidiStrummer) instead.
 
+## Project
+
+## [Changelog](https://thunderstore.io/c/webfishing/p/toes/PotatoMidi/changelog)
+
+### [Contributing - pull requests welcomed](https://github.com/binury/PotatoMidi/pulls)
+
+### [Known Issues](https://github.com/binury/PotatoMidi/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen)
+
+### [Report an issue / Feedback](https://discord.gg/kjf3FCAMDb)
+
+### [Roadmap and feature requests](https://github.com/binury/PotatoMidi/issues?q=sort%3Aupdated-desc%20is%3Aissue%20is%3Aopen%20label%3Aenhancement)
+
 ## Configuration
 
 Any changes made to the configuration file will take effect immediately!
