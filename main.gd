@@ -1,135 +1,146 @@
 extends Node
 
 enum MidiNote {
-	C_neg1,
-	Cs_neg1,
-	D_neg1,
-	Ds_neg1,
-	E_neg1,
-	F_neg1,
-	Fs_neg1,
-	G_neg1,
-	Gs_neg1,
-	A_neg1,
-	As_neg1,
-	B_neg1,
-	C0,
-	Cs0,
-	D0,
-	Ds0,
-	E0,
-	F0,
-	Fs0,
-	G0,
-	Gs0,
-	A0,
-	As0,
-	B0,
-	C1,
-	Cs1,
-	D1,
-	Ds1,
-	E1,
-	F1,
-	Fs1,
-	G1,
-	Gs1,
-	A1,
-	As1,
-	B1,
-	C2,
-	Cs2,
-	D2,
-	Ds2,
-	E2,
-	F2,
-	Fs2,
-	G2,
-	Gs2,
-	A2,
-	As2,
-	B2,
-	C3,
-	Cs3,
-	D3,
-	Ds3,
-	E3,
-	F3,
-	Fs3,
-	G3,
-	Gs3,
-	A3,
-	As3,
-	B3,
-	C4,
-	Cs4,
-	D4,
-	Ds4,
-	E4,
-	F4,
-	Fs4,
-	G4,
-	Gs4,
-	A4,
-	As4,
-	B4,
-	C5,
-	Cs5,
-	D5,
-	Ds5,
-	E5,
-	F5,
-	Fs5,
-	G5,
-	Gs5,
-	A5,
-	As5,
-	B5,
-	C6,
-	Cs6,
-	D6,
-	Ds6,
-	E6,
-	F6,
-	Fs6,
-	G6,
-	Gs6,
-	A6,
-	As6,
-	B6,
-	C7,
-	Cs7,
-	D7,
-	Ds7,
-	E7,
-	F7,
-	Fs7,
-	G7,
-	Gs7,
-	A7,
-	As7,
-	B7,
-	C8,
-	Cs8,
-	D8,
-	Ds8,
-	E8,
-	F8,
-	Fs8,
-	G8,
-	Gs8,
-	A8,
-	As8,
-	B8,
-	C9,
-	Cs9,
-	D9,
-	Ds9,
-	E9,
-	F9,
-	Fs9,
-	G9
+	C_neg1,   # 0
+	Cs_neg1,  # 1
+	D_neg1,   # 2
+	Ds_neg1,  # 3
+	E_neg1,   # 4
+	F_neg1,   # 5
+	Fs_neg1,  # 6
+	G_neg1,   # 7
+	Gs_neg1,  # 8
+	A_neg1,   # 9
+	As_neg1,  # 10
+	B_neg1,   # 11
+
+	C0,   # 12
+	Cs0,  # 13
+	D0,   # 14
+	Ds0,  # 15
+	E0,   # 16
+	F0,   # 17
+	Fs0,  # 18
+	G0,   # 19
+	Gs0,  # 20
+	A0,   # 21
+	As0,  # 22
+	B0,   # 23
+
+	C1,   # 24
+	Cs1,  # 25
+	D1,   # 26
+	Ds1,  # 27
+	E1,   # 28
+	F1,   # 29
+	Fs1,  # 30
+	G1,   # 31
+	Gs1,  # 32
+	A1,   # 33
+	As1,  # 34
+	B1,   # 35
+
+	C2,   # 36
+	Cs2,  # 37
+	D2,   # 38
+	Ds2,  # 39
+	E2,   # 40
+	F2,   # 41
+	Fs2,  # 42
+	G2,   # 43
+	Gs2,  # 44
+	A2,   # 45
+	As2,  # 46
+	B2,   # 47
+
+	C3,   # 48
+	Cs3,  # 49
+	D3,   # 50
+	Ds3,  # 51
+	E3,   # 52
+	F3,   # 53
+	Fs3,  # 54
+	G3,   # 55
+	Gs3,  # 56
+	A3,   # 57
+	As3,  # 58
+	B3,   # 59
+
+	C4,   # 60
+	Cs4,  # 61
+	D4,   # 62
+	Ds4,  # 63
+	E4,   # 64
+	F4,   # 65
+	Fs4,  # 66
+	G4,   # 67
+	Gs4,  # 68
+	A4,   # 69
+	As4,  # 70
+	B4,   # 71
+
+	C5,   # 72
+	Cs5,  # 73
+	D5,   # 74
+	Ds5,  # 75
+	E5,   # 76
+	F5,   # 77
+	Fs5,  # 78
+	G5,   # 79
+	Gs5,  # 80
+	A5,   # 81
+	As5,  # 82
+	B5,   # 83
+
+	C6,   # 84
+	Cs6,  # 85
+	D6,   # 86
+	Ds6,  # 87
+	E6,   # 88
+	F6,   # 89
+	Fs6,  # 90
+	G6,   # 91
+	Gs6,  # 92
+	A6,   # 93
+	As6,  # 94
+	B6,   # 95
+
+	C7,   # 96
+	Cs7,  # 97
+	D7,   # 98
+	Ds7,  # 99
+	E7,   # 100
+	F7,   # 101
+	Fs7,  # 102
+	G7,   # 103
+	Gs7,  # 104
+	A7,   # 105
+	As7,  # 106
+	B7,   # 107
+
+	C8,   # 108
+	Cs8,  # 109
+	D8,   # 110
+	Ds8,  # 111
+	E8,   # 112
+	F8,   # 113
+	Fs8,  # 114
+	G8,   # 115
+	Gs8,  # 116
+	A8,   # 117
+	As8,  # 118
+	B8,   # 119
+
+	C9,   # 120
+	Cs9,  # 121
+	D9,   # 122
+	Ds9,  # 123
+	E9,   # 124
+	F9,   # 125
+	Fs9,  # 126
+	G9    # 127
 }
+
 
 const MIDI_NOTE_NAMES := {
 	0: "C-1",
@@ -493,7 +504,7 @@ func _load_config() -> Dictionary:
 	return new_config
 
 
-func _create_pitch_array(instrument: Dictionary):
+func _create_pitch_array(instrument: Dictionary) -> Array:
 	if instrument.has("pitch_range"):
 		var pitch_range = instrument["pitch_range"]
 		return range(pitch_range["min"], pitch_range["max"])
@@ -504,8 +515,16 @@ func _create_pitch_array(instrument: Dictionary):
 		var pitch_list = instrument["pitch_list"]
 		return pitch_list
 	else:
-		print("PotatoMidi: Instrument has no pitch information: ", instrument)
-		return null
+		Chat.write(
+			(
+				"[color=yellow]"
+				+ "PotatoMidi: One or more of your instruments has [b]no pitch information.[/b]"
+				+ "You may safely ignore this message if this is intentional, although it likely is not..."
+				+ "[/color]"
+			)
+		)
+		instrument.pitch_range = {"min": MidiNote.C0, "max": MidiNote.G9}
+		return _create_pitch_array(instrument)
 
 
 func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Array, instrument: Dictionary):
@@ -526,14 +545,18 @@ func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Ar
 		print(instruments)
 
 
+func _validate_instrument(instrument: Dictionary) -> bool:
+	var error: String
 	if not instrument.has("instrument"):
-		print("PotatoMidi: Instrument has no instrument set: ", instrument)
-		return false
+		error = "%s has no instrument set" % instrument
 	if not instrument.has("channels"):
-		print("PotatoMidi: Instrument has no channels: ", instrument)
-		return false
-	if _create_pitch_array(instrument) == null:
-		print("PotatoMidi: Instrument has no pitch information: ", instrument)
+		error = "%s has no channels" % instrument
+	if _create_pitch_array(instrument).empty():
+		# This should no longer ever happen
+		error = "%s has no pitch information" % instrument
+	if error:
+		Chat.write("[color=red]PotatoMidi: " + error + "[/color]")
+		push_error("[PotatoMidi]: " + error)
 		return false
 	return true
 
