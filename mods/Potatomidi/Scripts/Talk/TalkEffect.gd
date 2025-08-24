@@ -41,6 +41,8 @@ func trigger_talk(input_event: Dictionary):
 	var letter: String
 	var letter_or_letters = parameters.get("letter", "random")
 	if typeof(letter_or_letters) == TYPE_ARRAY:
+		if letter_or_letters.empty():
+			return
 		letter = letter_or_letters[randi() % letter_or_letters.size()]
 	elif letter_or_letters == "random":
 		letter = ["a", "e", "o"][randi() % 3]
