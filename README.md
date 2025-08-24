@@ -306,7 +306,7 @@ These are named references, for you convenience, to map to channel numbers- you 
 - `sfx_sound`
 
   - **Type**: `String`
-  - **Description**: The name of the SFX sound to play. See [Valid SFX Sounds](https://github.com/binury/PotatoMidi/blob/master/SFX%20Sounds.md) for a list of valid SFX sounds.
+  - **Description**: The name of the SFX sound to play. See [below](#valid-sfx-instrument-kinds) for a list of valid SFX sounds.
   - **Default**: `bark_cat`
   - **Example**:
 
