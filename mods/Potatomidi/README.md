@@ -254,13 +254,17 @@ These are named references, for you convenience, to map to channel numbers- you 
 
 - `letter`
 
-  - **Type**: `String`
+  - **Type**: `String` OR `String[]`
   - **Description**: The letter to use for the talk effect.
   - **Default**: Randomly chosen (each note) between `a`, `o`, or `e`
-  - **Example**:
+  - **Examples**:
 
   ```jsonc
-  "letter": "a"
+  "letter": "a",
+  ```
+
+  ```jsonc
+  "letter": ["a", "o", "e"],
   ```
 
 #### sfx
@@ -398,7 +402,7 @@ Some sounds, unfortunately, have a [random pitch modifier](https://docs.godoteng
       "apply_pitch": true,
       "apply_velocity": true,
       // "base_pitch": 50,
-      "letter": "random"
+      "letter": ["a", "e", "o"]
     }
   },
   {
