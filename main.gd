@@ -527,8 +527,11 @@ func _create_pitch_array(instrument: Dictionary) -> Array:
 		return _create_pitch_array(instrument)
 
 
-func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Array, instrument: Dictionary):
-	var pitches = _create_pitch_array(instrument)
+func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Array, instrument: Dictionary) -> void:
+	var pitches := _create_pitch_array(instrument)
+	var params: Dictionary = instrument.get("parameters", {})
+	if not params.has("base_pitch"):
+		params.base_pitch = MidiNote.C3 if pitches.empty() else pitches[0]
 
 	for channel in channels:
 		var channel_id
