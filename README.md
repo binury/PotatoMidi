@@ -1,99 +1,104 @@
-# 🎸Potato Midi🎤
+# 🎸Potato🥔Midi🎤
 
-This mod takes MIDI input and allows you to configure it to output through not only guitar but in-game sounds, however you see fit.
+This mod takes MIDI input and allows you to configure it to output through not only guitar but in-game sounds, _however you see fit..._
+Like, singing, or playing drums with a boxing glove, and more...
 
-It's for power users who want to play around with a [configuration](#configuration) file to play more than just guitar.
+It's for power users who want to experimenting and enjoy playing around with a [configuration](#configuration) file to make more noises than just guitar notes!
 
-If you are not a power user, you should consider using [MidiStrummer](https://github.com/puppy-girl/MidiStrummer) instead.
-
-## Usage
-
-- Connect your MIDI input device before starting WebFishing
-- Launch WebFishing with GDWeave
-- Begin (external) MIDI playback (e.g., MidiPlay, MIDI instrument)
-- MIDI events will output into your game client!
+> [!WARNING]
+> If you are not comfortable with editing
+> --**[or learning how to edit](https://www.youtube.com/results?search_query=how%20to%20edit%20a%20json%20file)**--
+> a `.json` config file, you should use something like [MidiStrummer](https://github.com/puppy-girl/MidiStrummer) instead.
 
 ## Configuration
 
-Any changes made to the configuration file will take effect immediately. <br>
-Any issues with the configuration file will be logged to the console/log file.
+Any changes made to the configuration file will take effect immediately!
+Issues with the configuration file will be logged to the log file and the player warned, if in-game (and so the chat window is visible).
 
-**If you want to reset the configuration file, delete the file and it'll be regenerated.**
-
-Logs are written to:
-
-`%AppData%\Godot\app_userdata\webfishing_2_newver\logs\godot.log`
-
-## File location
+**_If you want to reset your configuration file to default, delete the file and it'll be recreated!._**
 
 `%AppData%\Godot\app_userdata\webfishing_2_newver\PotatoMidi.json`
 
-## Structure
+### Structure
 
 The configuration file has the following structure:
 
-- `version`: The version of the configuration file.
-- `channel_mappings`: A dictionary mapping logical instrument names to MIDI channel numbers.
-- `instruments`: A list of dictionaries, each representing an instrument with specific properties and parameters.
+- `version`: [The PotatoMidi configuration-scheme version number](#version)
+- `channel_mappings`: [A dictionary mapping your chosen instrument names to MIDI channel numbers.](#channel-mappings)
+- `instruments`: [A list of your instrument configurations](#instruments)
 
-## Version
+### Version
 
 - **Type**: `int`
 - **Description**: The version of the configuration file.
 - **Current version**: `1`
 - **Example**:
 
-```json
+```jsonc
 "version": 1
 ```
 
-## Channel mappings
+### Channel mappings
+
+These are named references, for you convenience, to map to channel numbers- you can name them _whatever you want_.
 
 - **Type**: `Dictionary`
-- **Description**: A dictionary mapping logical instrument names to MIDI channel numbers.
+- **Description**: A dictionary mapping user-defined names to MIDI channel numbers.
 - **Example**:
 
-```json
+```jsonc
 "channel_mappings": {
-    "ACOUSTIC_GRAND_PIANO": 0,
-    "BRIGHT_ACOUSTIC_PIANO": 1,
+    "acoustic_grand_piano": 0,
+    "bright_acoustic_piano": 1,
+    "banana": 2,
     ...
 }
 ```
 
-## Instruments
+### Instruments
 
 - **Type**: `Array of Dictionaries`
 - **Description**: Each dictionary defines an instrument with unique properties and specific parameters.
 - **Keys**:
+
   - `instrument`: The name of the instrument.
+
     - **Type**: `String`
     - **Description**: The name of the instrument.
     - **Example**:
-    ```json
+
+    ```jsonc
     "instrument": "guitar_strummer"
     ```
+
   - `channels`
+
     - **Type**: `Array of Strings`
     - **Description**: A list of MIDI channel names for the instrument.
     - **Example**:
-    ```json
+
+    ```jsonc
     "channels": [
-        "ACOUSTIC_GRAND_PIANO",
-        "BRIGHT_ACOUSTIC_PIANO",
-        "ELECTRIC_GRAND_PIANO",
-        "HONKY_TONK_PIANO",
-        "RHODES_PIANO",
-        "CHORDS",
-        "SYNTH_PAD"
+        "acoustic_grand_piano",
+        "bright_acoustic_piano",
+        "electric_grand_piano",
+        "honky_tonk_piano",
+        "rhodes_piano",
+        "chords",
+        "synth_pad"
     ]
     ```
-  - **Pitch Requirement**
-    - One of the following:
+
+  - **Pitch**
+
+    - _One_ of the following:
+
       - `pitch_range`
+
         - **Type**: `Dictionary`
         - **Description**: A dictionary with the minimum and maximum pitches for the instrument.
         - **Keys**:
+
           - `min`: The minimum pitch for the instrument.
             - **Type**: `int`
             - **Description**: The minimum pitch for the instrument.
@@ -103,24 +108,31 @@ The configuration file has the following structure:
             - **Description**: The maximum pitch for the instrument.
             - **Example**: `80`
           - **Example**:
-          ```json
+
+          ```jsonc
           "pitch_range": {
               "min": 40,
               "max": 80
           }
           ```
+
       - `pitch`
+
         - **Type**: `int`
         - **Description**: The pitch of the instrument.
         - **Example**:
-        ```json
+
+        ```jsonc
         "pitch": 40
         ```
+
       - `pitch_list`
+
         - **Type**: `Array of ints`
         - **Description**: An array of pitches for the instrument.
         - **Example**:
-        ```json
+
+        ```jsonc
         "pitch_list": [
             40,
             45,
@@ -131,7 +143,7 @@ The configuration file has the following structure:
         ]
         ```
 
-## MIDI Percussion Conventions
+### MIDI Percussion Conventions
 
 > For MIDI Channel 10, each MIDI KEY number ("NOTE#") corresponds to a
 > different drum sound, as shown below. While many current instruments
@@ -189,170 +201,304 @@ The configuration file has the following structure:
 | 80   | Ab4  | Mute Triangle      |
 | 81   | A4   | Open Triangle      |
 
-## Instrument specific parameters
+### Instrument-specific Settings
 
-- **Type**: `Dictionary`
-- **Description**: A dictionary of parameters specific to the instrument.
+#### guitar_strummer
 
-1. **guitar_strummer**
-   - **Guitar can only do 40-80 pitch**
-   - `apply_velocity`
-     - **Type**: `bool`
-     - **Description**: Whether to apply velocity to the strum.
-     - **Default**: `true`
-     - **Example**:
-     ```json
-     "apply_velocity": true
-     ```
-2. **talk_effect**
-   - `apply_pitch`
-     - **Type**: `bool`
-     - **Description**: Whether to apply pitch to the talk effect.
-     - **Default**: `true`
-     - **Example**:
-     ```json
-     "apply_pitch": true
-     ```
-   - `base_pitch`
-     - **Type**: `int`
-     - **Description**: The base pitch for the talk effect. (The talk effect has been clamped between 0.5-2.0)
-     - **Default**: The lowest note in your instrument's pitch range
-     - **Example**:
-     ```json
-     "base_pitch": 53
-     ```
-   - `letter`
-     - **Type**: `String`
-     - **Description**: The letter to use for the talk effect.
-     - **Default**: Randomly chosen (each note) between `a`, `o`, or `e`
-     - **Example**:
-     ```json
-     "letter": "a"
-     ```
-3. **SFX**
-   - `apply_pitch`
-     - **Type**: `bool`
-     - **Description**: Whether to apply pitch to the SFX.
-     - **Default**: `true`
-     - **Example**:
-     ```json
-     "apply_pitch": true
-     ```
-   - `base_pitch`
-     - **Type**: `int`
-     - **Description**: The base pitch for the SFX.
-     - **Default**: `80`
-     - **Example**:
-     ```json
-     "base_pitch": 80
-     ```
-   - `face_emote`
-     - **Type**: `String`
-     - **Description**: The face emote to use for the SFX.
-     - **Default**: `null`
-     - **Example**:
-     ```json
-     "face_emote": "bark"
-     ```
-   - `sfx_sound`
-     - **Type**: `String`
-     - **Description**: The name of the SFX sound to play. See [Valid SFX Sounds](https://github.com/ThePotato97/FishingPotatoMidi/blob/master/SFX%20Sounds.md) for a list of valid SFX sounds.
-     - **Default**: `bark_cat`
-     - **Example**:
-     ```json
-     "sfx_sound": "bark_cat"
-     ```
+- `apply_velocity`
 
-- **Example instrument configuration**:
+  - **Type**: `bool`
+  - **Description**: Whether to apply velocity to the strum. You **_should not ever turn this off!_**
+  - **Default**: `true`
+  - **Example**:
 
-```json
-{
+  ```jsonc
+  "apply_velocity": true
+  ```
+
+#### talk_effect
+
+- `apply_pitch`
+
+  - **Type**: `bool`
+  - **Description**: Whether to use the note's pitch to determine the spoken letter's pitch. You **_should not ever turn this off!_**
+  - **Default**: `true`
+  - **Example**:
+
+  ```jsonc
+  "apply_pitch": true
+  ```
+
+- `base_pitch`
+
+  - **Type**: `int`
+  - **Description**: The base pitch for the talk effect. Note that the game limits the pitch (between "`0.5` and `2.0`").
+  - **Default**: The lowest note in your instrument's pitch range
+  - **Example**:
+
+  ```jsonc
+  "base_pitch": 53
+  ```
+
+- `letter`
+
+  - **Type**: `String`
+  - **Description**: The letter to use for the talk effect.
+  - **Default**: Randomly chosen (each note) between `a`, `o`, or `e`
+  - **Example**:
+
+  ```jsonc
+  "letter": "a"
+  ```
+
+#### sfx
+
+- `apply_pitch`
+
+  - **Type**: `bool`
+  - **Description**: Whether to apply pitch to the SFX.
+  - **Default**: `true`
+  - **Example**:
+
+  ```jsonc
+  "apply_pitch": true
+  ```
+
+- `base_pitch`
+
+  - **Type**: `int`
+  - **Description**: The base pitch for the SFX.
+  - **Default**: The lowest note in your instrument's pitch range
+  - **Example**:
+
+  ```jsonc
+  "base_pitch": 80
+  ```
+
+- `face_emote`
+
+  - **Type**: `String`
+  - **Description**: The face emote to use for the SFX. Any of one: `angry`, `bark`, `cat`, `flat`, `happy`, `kiss`, `strum`, `surprised`, `whine`
+  - **Default**: `null`
+  - **Example**:
+
+  ```jsonc
+  // "angry", "bark", "cat", "flat", "happy", "kiss", "strum", "surprised", "whine"
+  "face_emote": "bark"
+  ```
+
+- `sfx_sound`
+
+  - **Type**: `String`
+  - **Description**: The name of the SFX sound to play. See [Valid SFX Sounds](https://github.com/binury/PotatoMidi/blob/master/SFX%20Sounds.md) for a list of valid SFX sounds.
+  - **Default**: `bark_cat`
+  - **Example**:
+
+  ```jsonc
+  // "equip", "splash", "splashb", "drown", "land", "jump", "jump_big", "dive_woosh", "dive_scrape", "reel_slow", "reel_fast", "woosh", "drink", "drink_nocap", "md_beep_veryslow", "md_beep_veryslowb", "md_beep_slow", "md_beep_slowb", "md_beep_fast", "md_beep_veryfast", "growl_cat", "growl_dog", "whine_dog", "whine_cat", "punch", "phone_call", "kiss", "rip", "cash1", "cash2", "cash3", "strum", "menu_a", "menu_b" "notification"
+
+  "sfx_sound": "bark_cat"
+  ```
+
+### Valid SFX Instrument Kinds
+
+Some sounds, unfortunately, have a [random pitch modifier](https://docs.godotengine.org/en/3.5/classes/class_audiostreamrandompitch.html).
+
+| sound_name        | Hear normally in game when...                                              | Random pitch intensity |
+| ----------------- | -------------------------------------------------------------------------- | ---------------------- |
+| bark_cat          | meowing                                                                    | 1.25                   |
+| bark_dog          | woofing                                                                    | 1.25                   |
+| cash1             | Buying Something (A)                                                       | -                      |
+| cash2             | Buying Something (B)                                                       | -                      |
+| cash3             | Buying Something (C)                                                       | -                      |
+| dive_scrape       | You land on the ground after diving                                        | -                      |
+| dive_woosh        | You press the jump button twice                                            | -                      |
+| drink             | Sippin A                                                                   | -                      |
+| drink_nocap       | Sippin B                                                                   | -                      |
+| drown             | You try to go swimming                                                     | -                      |
+| equip             | Switching items                                                            | -                      |
+| growl_cat         | `<CTRL + g>`                                                               | -                      |
+| growl_dog         | "                                                                          | -                      |
+| jump              | You jump off the ground                                                    | -                      |
+| jump_big          | You jump while under the effect of performance enhancing substances (soda) | -                      |
+| kiss              | 😘                                                                         | -                      |
+| land              | You land on the ground                                                     | -                      |
+| md_beep_fast      | "                                                                          | -                      |
+| md_beep_slow      | "                                                                          | -                      |
+| md_beep_slowb     | "                                                                          | -                      |
+| md_beep_veryfast  | "                                                                          | -                      |
+| md_beep_veryslow  | Metal detector                                                             | -                      |
+| md_beep_veryslowb | "                                                                          | -                      |
+| menu_a            | Changing menus                                                             | -                      |
+| menu_b            | "                                                                          | -                      |
+| notification      | Someone asks to join your island                                           | -                      |
+| phone_call        | Ringing the fish broker                                                    | -                      |
+| poof              | Spawning props                                                             | 1.4                    |
+| punch             | Choosing violence                                                          | -                      |
+| reel_fast         | Reely reely?                                                               | -                      |
+| reel_slow         | Reely?                                                                     | -                      |
+| rip               | Gambling                                                                   | -                      |
+| splash            | Fish make this noise                                                       | -                      |
+| splashb           | Fish make this noise                                                       | -                      |
+| step              | Walking                                                                    | 1.3                    |
+| step_fastrun      | Running while tweaked on sugar                                             | 1.5                    |
+| step_run          | Running                                                                    | 1.3                    |
+| strum             | Entering a lobby                                                           | -                      |
+| tambourine        | -                                                                          | 1.02                   |
+| whine_cat         | `<ALT + g>`                                                                | -                      |
+| whine_dog         | "                                                                          | -                      |
+| woosh             | You cast a fishing line                                                    | -                      |
+| zip               | Opening your backpack                                                      | 1.4                    |
+
+## Example configuration
+
+```jsonc
+[
+  {
     "instrument": "guitar_strummer",
     "channels": [
-        "ACOUSTIC_GRAND_PIANO",
-        "BRIGHT_ACOUSTIC_PIANO",
-        "ELECTRIC_GRAND_PIANO",
-        "HONKY_TONK_PIANO",
-        "RHODES_PIANO",
-        "CHORDS",
-        "SYNTH_PAD"
+      "acoustic_grand_piano",
+      "bright_acoustic_piano",
+      "electric_grand_piano",
+      "honky_tonk_piano",
+      "rhodes_piano",
+      "chords",
+      "synth_pad"
     ],
     "pitch_range": {
-        "min": 40,
-        "max": 80
+      "min": 40,
+      "max": 80
     },
     "parameters": {
-        "apply_velocity": true
+      "apply_pitch": true,
+      "apply_velocity": true
+      // "base_pitch": 40
     }
-},
-{
+  },
+  {
     "instrument": "talk_effect",
-    "channels": [
-        "ACOUSTIC_GRAND_PIANO",
-        "BRIGHT_ACOUSTIC_PIANO",
-        "ELECTRIC_GRAND_PIANO",
-        "HONKY_TONK_PIANO",
-        "RHODES_PIANO",
-        "CHORDS",
-        "SYNTH_PAD"
-    ],
+    "channels": ["acoustic_grand_piano"],
     "pitch_range": {
-        "min": 12,
-        "max": 40
+      "min": 50,
+      "max": 95
     },
     "parameters": {
-        "apply_pitch": true,
-        "base_pitch": 53,
-        "letter": "a"
+      "apply_pitch": true,
+      "apply_velocity": true,
+      // "base_pitch": 50,
+      "letter": "random"
     }
-},
-{
+  },
+  {
+    // Bass drum
     "instrument": "sfx",
-    "channels": [
-        "DRUMS",
-        "PERCUSSION"
-    ],
-    "pitch": 35,
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [35, 36],
     "parameters": {
-        "apply_pitch": false,
-        "sfx_sound": "punch"
+      "base_pitch": 10,
+      "apply_pitch": false,
+      "apply_velocity": false,
+      "sfx_sound": "punch"
     }
-},
-{
+  },
+  {
+    // Bass drum 2
     "instrument": "sfx",
-    "channels": [
-        "DRUMS",
-        "PERCUSSION"
-    ],
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [35, 36],
+    "parameters": {
+      "base_pitch": 7,
+      "apply_pitch": true,
+      "apply_velocity": true,
+      "sfx_sound": "menu_b"
+    }
+  },
+  {
+    // Snares
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [38, 40],
+    "parameters": {
+      "apply_pitch": true,
+      "base_pitch": 40,
+      "apply_velocity": true,
+      "sfx_sound": "tambourine"
+    }
+  },
+  {
+    // Hi-hats closed
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [44],
+    "parameters": {
+      "apply_pitch": true,
+      "apply_velocity": true,
+      "base_pitch": 60,
+      // Maybe better base pitch
+      "sfx_sound": "notification"
+    }
+  },
+  {
+    // Hi-hats open
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [46],
+    "parameters": {
+      "apply_pitch": true,
+      "apply_velocity": false,
+      "base_pitch": 40,
+      // Maybe better base pitch
+      "sfx_sound": "cash3"
+    }
+  },
+  {
+    // Toms
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [41, 43, 45, 47, 48, 50],
+    "parameters": {
+      "apply_pitch": false,
+      "apply_velocity": true,
+      "sfx_sound": "woosh"
+    }
+  },
+  {
+    // Toms 2
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [41, 43, 45, 47, 48, 50],
+    "parameters": {
+      "apply_pitch": false,
+      "apply_velocity": true,
+      "sfx_sound": "jump"
+    }
+  },
+  {
+    // Cymbals
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
+    "pitch_list": [49, 51, 52, 55, 57, 59],
+    "parameters": {
+      "apply_pitch": false,
+      "apply_velocity": true,
+      "sfx_sound": "dive_woosh"
+    }
+  },
+  {
+    // Etc.
+    "instrument": "sfx",
+    "channels": ["DRUMS", "PERCUSSION"],
     "pitch_list": [
-        48,
-        54
+      54, // Tambourine
+      53, // Bell
+      56, // Cowbell
+      70 // Maracas
     ],
     "parameters": {
-        "apply_pitch": false,
-        "sfx_sound": "tambourine"
+      "apply_pitch": false,
+      "apply_velocity": false,
+      "sfx_sound": "tambourine"
     }
-},
-{
-    "instrument": "sfx",
-    "channels": [
-        "ACOUSTIC_GRAND_PIANO",
-        "BRIGHT_ACOUSTIC_PIANO",
-        "ELECTRIC_GRAND_PIANO",
-        "HONKY_TONK_PIANO",
-        "RHODES_PIANO",
-        "CHORDS",
-        "SYNTH_PAD"
-    ],
-    "pitch_range": {
-        "min": 72,
-        "max": 100
-    },
-    "parameters": {
-        "base_pitch": 80,
-        "face_emote": "bark",
-        "apply_pitch": true,
-        "sfx_sound": "bark_cat"
-    }
-}
+  }
+]
 ```
