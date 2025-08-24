@@ -519,14 +519,13 @@ func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Ar
 			print("PotatoMidi: Unknown channel: ", channel)
 			continue
 		for pitch in pitches:
-			instruments.append({
-				"callback": callback,
-				"channel": channel_id,
-				"pitch": pitch,
-				"parameters": instrument.get("parameters", {})
-			})
+			instruments.append({"callback": callback, "channel": channel_id, "pitch": pitch, "parameters": params})
 
-func _validate_instrument(instrument: Dictionary):
+	if DEBUG:
+		print("Potatomidi: Loaded instruments:")
+		print(instruments)
+
+
 	if not instrument.has("instrument"):
 		print("PotatoMidi: Instrument has no instrument set: ", instrument)
 		return false
@@ -552,26 +551,30 @@ func _load_user_config() -> void:
 		return
 	instruments = []
 
-	var channel_mappings_config = config["channel_mappings"]
+	var channel_mappings_config: Dictionary = config["channel_mappings"]
 
-	var instruments_config = config.get("instruments", [])
+	var instruments_config: Array = config.get("instruments", [])
 
-	var sfx_mappings_config = config.get("sfx_mappings", [])
+	var sfx_mappings_config: Array = config.get("sfx_mappings", [])
 
-	var talk_effect_letter_mappings_config = config.get("talk_effect_letter_mappings", [])
+#	var talk_effect_letter_mappings_config = config.get("talk_effect_letter_mappings", [])
 
 	for instrument in instruments_config:
 		if not _validate_instrument(instrument):
 			continue
-		var channels = instrument["channels"]
-		var instrument_name = instrument["instrument"]
+		var channels: Array = instrument["channels"]
+		var instrument_name: String = instrument["instrument"]
+		instrument_name = instrument_name.to_lower()
 
 		var instrument_callback = instruments_lookup[instrument_name]
 
 		if instrument_callback:
 			_add_instrument(instrument_callback, channel_mappings_config, channels, instrument)
 		else:
-			print("PotatoMidi: Unknown instrument: ", instrument_name)
+			var msg: String = "Unknown instrument %s" % instrument_name
+			Chat.write("[color=yellow]PotatoMidi: (warning)" + msg + "[/color]")
+			if DEBUG:
+				print("[PotatoMidi]: %s" % msg)
 
 
 func _ready() -> void:
@@ -585,30 +588,21 @@ func _ready() -> void:
 	_setup_midi()
 
 
-func _find_best_instrument(event: InputEventMIDI):
-	# check for direct matches
+func _find_best_instrument(event: InputEventMIDI) -> Array:
 	var best_instruments = []
 	for instrument in instruments:
 		if instrument.pitch == event.pitch and instrument.channel == event.channel:
 			best_instruments.append(instrument)
-	if best_instruments.size() > 0:
-		return best_instruments
+	return best_instruments
 
 
-func _handle_note_on(event):
+func _handle_note_on(event: InputEvent) -> void:
 	var player = Players.local_player
 	if not is_instance_valid(player):
 		return
 
-	var best_instruments = _find_best_instrument(event)
-
-	if best_instruments and best_instruments.size() > 0:
-		for instrument in best_instruments:
-			instrument.callback.call_func({
-				"player": player,
-				"event": event,
-				"parameters": instrument.parameters
-			})
+	for instrument in _find_best_instrument(event):
+		instrument.callback.call_func({"player": player, "event": event, "parameters": instrument.parameters})
 
 	# var drums = [114, 116, 118, 35, 36]
 
