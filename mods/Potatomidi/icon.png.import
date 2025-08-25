@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-c916eac6deff75f973f89839cacecab4.stex"
+path="res://.import/icon.png-fbaaab7ad7c3fb8498b8d2336a7e9c3f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://mods/Potatomidi/icon.png"
-dest_files=[ "res://.import/icon.png-c916eac6deff75f973f89839cacecab4.stex" ]
+source_file="res://mods/PotatoMidi/icon.png"
+dest_files=[ "res://.import/icon.png-fbaaab7ad7c3fb8498b8d2336a7e9c3f.stex" ]
 
 [params]
 

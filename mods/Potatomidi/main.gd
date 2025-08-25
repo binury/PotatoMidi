@@ -485,17 +485,17 @@ func _load_config() -> Dictionary:
 			_last_modified_time = current_modification_time
 			config_file.open(CONFIG_FILE_PATH, File.READ)
 			var parsed_json := JSON.parse(JSONMinifier.minify_json(config_file.get_as_text()))
+			var result = parsed_json.result
 			config_file.close()
-			if parsed_json.result.hash() != config.hash():
-				if parsed_json.error == OK:
-					if config.empty() == false:
-						Chat.notify("PotatoMidi: Config file modified, reloading...")
-					new_config = parsed_json.result
-				else:
-					Chat.write(
-						"PotatoMidi: Oops! Something is broken in your [url=file://%s]configuration JSON[/url]!" % global_config_file_path
-					)
-					Chat.write("[color=red]%s[/color]" % parsed_json.error_string)
+			if typeof(result) != TYPE_DICTIONARY or parsed_json.error != OK:
+				Chat.write(
+					"PotatoMidi: Oops! Something is broken in your configuration. [url=file://%s]Click here to edit config.json[/url] and try again!" % global_config_file_path
+				)
+				Chat.write("[color=red]Error encountered while parsing: %s[/color]" % parsed_json.error_string)
+			elif parsed_json.result.hash() != config.hash():
+				if config.empty() == false:
+					Chat.notify("PotatoMidi: Config file modified, reloading...")
+				new_config = parsed_json.result
 	else:
 		var default_config = _default_config.get_config()
 		config_file.open(CONFIG_FILE_PATH, File.WRITE)
@@ -548,13 +548,15 @@ func _add_instrument(callback: FuncRef, channel_lookup: Dictionary, channels: Ar
 		print(instruments)
 
 
-func _validate_instrument(instrument: Dictionary) -> bool:
+func _validate_instrument(instrument) -> bool:
 	var error: String
-	if not instrument.has("instrument"):
+	if typeof(instrument) != TYPE_DICTIONARY:
+		error = "Invalid instruments configuration. Check your instruments list for typos..."
+	elif not instrument.has("instrument"):
 		error = "%s has no instrument set" % instrument
-	if not instrument.has("channels"):
+	elif not instrument.has("channels"):
 		error = "%s has no channels" % instrument
-	if _create_pitch_array(instrument).empty():
+	elif _create_pitch_array(instrument).empty():
 		# This should no longer ever happen
 		error = "%s has no pitch information" % instrument
 	if error:
