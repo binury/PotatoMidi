@@ -424,7 +424,7 @@ var instruments = []
 onready var _guitar_strummer = preload("res://mods/PotatoMidi/Scripts/Guitar/GuitarStrummer.gd").new()
 onready var _sfx_effect = preload("res://mods/PotatoMidi/Scripts/SFX/SFXEffect.gd").new()
 onready var _talk_effect = preload("res://mods/PotatoMidi/Scripts/Talk/TalkEffect.gd").new()
-onready var _default_config = preload("res://mods/PotatoMidi/default_config.gd").new()
+onready var _default_config := preload("res://mods/PotatoMidi/default_config.gd").new()
 onready var JSONMinifier = preload("res://mods/PotatoMidi/Lib/json_minifier.gd").new()
 
 var DEBUG = false
@@ -487,10 +487,11 @@ func _load_config() -> Dictionary:
 			elif parsed_json.result.hash() != config.hash():
 				new_config = parsed_json.result
 	else:
-		var default_config = _default_config.get_config()
+		var default_config := _default_config.get_config()
 		config_file.open(CONFIG_FILE_PATH, File.WRITE)
 		config_file.store_string(JSON.print(default_config, "\t"))
 		config_file.close()
+		new_config = default_config.duplicate()
 	return new_config
 
 

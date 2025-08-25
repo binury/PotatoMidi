@@ -119,5 +119,5 @@ var default_config = {
 }
 
 
-func get_config():
+func get_config() -> Dictionary:
 	return default_config
