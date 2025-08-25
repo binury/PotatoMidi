@@ -1,146 +1,135 @@
 extends Node
 
 enum MidiNote {
-	C_neg1,   # 0
+	C_neg1,  # 0
 	Cs_neg1,  # 1
-	D_neg1,   # 2
+	D_neg1,  # 2
 	Ds_neg1,  # 3
-	E_neg1,   # 4
-	F_neg1,   # 5
+	E_neg1,  # 4
+	F_neg1,  # 5
 	Fs_neg1,  # 6
-	G_neg1,   # 7
+	G_neg1,  # 7
 	Gs_neg1,  # 8
-	A_neg1,   # 9
+	A_neg1,  # 9
 	As_neg1,  # 10
-	B_neg1,   # 11
-
-	C0,   # 12
+	B_neg1,  # 11
+	C0,  # 12
 	Cs0,  # 13
-	D0,   # 14
+	D0,  # 14
 	Ds0,  # 15
-	E0,   # 16
-	F0,   # 17
+	E0,  # 16
+	F0,  # 17
 	Fs0,  # 18
-	G0,   # 19
+	G0,  # 19
 	Gs0,  # 20
-	A0,   # 21
+	A0,  # 21
 	As0,  # 22
-	B0,   # 23
-
-	C1,   # 24
+	B0,  # 23
+	C1,  # 24
 	Cs1,  # 25
-	D1,   # 26
+	D1,  # 26
 	Ds1,  # 27
-	E1,   # 28
-	F1,   # 29
+	E1,  # 28
+	F1,  # 29
 	Fs1,  # 30
-	G1,   # 31
+	G1,  # 31
 	Gs1,  # 32
-	A1,   # 33
+	A1,  # 33
 	As1,  # 34
-	B1,   # 35
-
-	C2,   # 36
+	B1,  # 35
+	C2,  # 36
 	Cs2,  # 37
-	D2,   # 38
+	D2,  # 38
 	Ds2,  # 39
-	E2,   # 40
-	F2,   # 41
+	E2,  # 40
+	F2,  # 41
 	Fs2,  # 42
-	G2,   # 43
+	G2,  # 43
 	Gs2,  # 44
-	A2,   # 45
+	A2,  # 45
 	As2,  # 46
-	B2,   # 47
-
-	C3,   # 48
+	B2,  # 47
+	C3,  # 48
 	Cs3,  # 49
-	D3,   # 50
+	D3,  # 50
 	Ds3,  # 51
-	E3,   # 52
-	F3,   # 53
+	E3,  # 52
+	F3,  # 53
 	Fs3,  # 54
-	G3,   # 55
+	G3,  # 55
 	Gs3,  # 56
-	A3,   # 57
+	A3,  # 57
 	As3,  # 58
-	B3,   # 59
-
-	C4,   # 60
+	B3,  # 59
+	C4,  # 60
 	Cs4,  # 61
-	D4,   # 62
+	D4,  # 62
 	Ds4,  # 63
-	E4,   # 64
-	F4,   # 65
+	E4,  # 64
+	F4,  # 65
 	Fs4,  # 66
-	G4,   # 67
+	G4,  # 67
 	Gs4,  # 68
-	A4,   # 69
+	A4,  # 69
 	As4,  # 70
-	B4,   # 71
-
-	C5,   # 72
+	B4,  # 71
+	C5,  # 72
 	Cs5,  # 73
-	D5,   # 74
+	D5,  # 74
 	Ds5,  # 75
-	E5,   # 76
-	F5,   # 77
+	E5,  # 76
+	F5,  # 77
 	Fs5,  # 78
-	G5,   # 79
+	G5,  # 79
 	Gs5,  # 80
-	A5,   # 81
+	A5,  # 81
 	As5,  # 82
-	B5,   # 83
-
-	C6,   # 84
+	B5,  # 83
+	C6,  # 84
 	Cs6,  # 85
-	D6,   # 86
+	D6,  # 86
 	Ds6,  # 87
-	E6,   # 88
-	F6,   # 89
+	E6,  # 88
+	F6,  # 89
 	Fs6,  # 90
-	G6,   # 91
+	G6,  # 91
 	Gs6,  # 92
-	A6,   # 93
+	A6,  # 93
 	As6,  # 94
-	B6,   # 95
-
-	C7,   # 96
+	B6,  # 95
+	C7,  # 96
 	Cs7,  # 97
-	D7,   # 98
+	D7,  # 98
 	Ds7,  # 99
-	E7,   # 100
-	F7,   # 101
+	E7,  # 100
+	F7,  # 101
 	Fs7,  # 102
-	G7,   # 103
+	G7,  # 103
 	Gs7,  # 104
-	A7,   # 105
+	A7,  # 105
 	As7,  # 106
-	B7,   # 107
-
-	C8,   # 108
+	B7,  # 107
+	C8,  # 108
 	Cs8,  # 109
-	D8,   # 110
+	D8,  # 110
 	Ds8,  # 111
-	E8,   # 112
-	F8,   # 113
+	E8,  # 112
+	F8,  # 113
 	Fs8,  # 114
-	G8,   # 115
+	G8,  # 115
 	Gs8,  # 116
-	A8,   # 117
+	A8,  # 117
 	As8,  # 118
-	B8,   # 119
-
-	C9,   # 120
+	B8,  # 119
+	C9,  # 120
 	Cs9,  # 121
-	D9,   # 122
+	D9,  # 122
 	Ds9,  # 123
-	E9,   # 124
-	F9,   # 125
+	E9,  # 124
+	F9,  # 125
 	Fs9,  # 126
-	G9    # 127
+	G9  # 127
 }
-
 
 const MIDI_NOTE_NAMES := {
 	0: "C-1",
@@ -489,12 +478,13 @@ func _load_config() -> Dictionary:
 			config_file.close()
 			if typeof(result) != TYPE_DICTIONARY or parsed_json.error != OK:
 				Chat.write(
-					"PotatoMidi: Oops! Something is broken in your configuration. [url=file://%s]Click here to edit config.json[/url] and try again!" % global_config_file_path
+					(
+						"PotatoMidi: Oops! Something is broken in your configuration. [url=file://%s]Click here to edit config.json[/url] and try again!"
+						% global_config_file_path
+					)
 				)
 				Chat.write("[color=red]Error encountered while parsing: %s[/color]" % parsed_json.error_string)
 			elif parsed_json.result.hash() != config.hash():
-				if config.empty() == false:
-					Chat.notify("PotatoMidi: Config file modified, reloading...")
 				new_config = parsed_json.result
 	else:
 		var default_config = _default_config.get_config()
@@ -573,10 +563,15 @@ func _load_user_config() -> void:
 		"sfx": funcref(_sfx_effect, "trigger_sfx")
 	}
 
-	config = _load_config()
-
-	if config.empty():
+	var new_config: Dictionary
+	new_config = _load_config()
+	if new_config.empty():
 		return
+	var config_was_reloaded = config.empty() == false
+	if config_was_reloaded:
+		Chat.notify("PotatoMidi: Config file reloaded ✅")
+		Chat.write("[color=green]PotatoMidi: Config file reloaded ✅[/color]")
+	config = new_config
 	instruments = []
 
 	var channel_mappings_config: Dictionary = config["channel_mappings"]
