@@ -1,6 +1,13 @@
 # Changelog
 
-## v1.0.0
+## [v1.0.1](https://github.com/binury/PotatoMidi/releases/tag/v1.0.1) - Fixes
+
+- Fixed crash when configuration file was totally invalid (#2)
+- Fixed initial default configuration generation not loading until game restart (#3)
+- Made it more obvious that you can click on the chat message to open your config file
+- Made successful configuration reload more distinguished from error notifications (green vs red)
+
+## [v1.0.0](https://github.com/binury/PotatoMidi/releases/tag/v1.0.0)
 
 - Documentation overhaul - [check it out](https://github.com/binury/PotatoMidi/blob/master/README.md)
 - The default configuration has been supercharged and now includes _most_ drum channel pitch assignments (by convention) - [check out the new documentation regarding that](https://github.com/binury/PotatoMidi/blob/master/README.md#midi-percussion-conventions)

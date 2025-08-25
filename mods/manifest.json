@@ -1,6 +1,6 @@
 {
     "name": "PotatoMidi",
-    "version_number": "1.0.0",
+    "version_number": "1.0.1",
     "website_url": "https://github.com/binury/PotatoMidi",
     "description": "Configurable MIDI playback however you see fit! Like, singing notes, playing drums with a boxing glove...",
     "dependencies": ["toes-Socks-0.4.0"]
